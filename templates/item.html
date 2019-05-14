@@ -1,0 +1,67 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<h1>Item: {{ item.name }}</h1>
+
+<p>
+	<a href = '{{ url_for('showCatalog') }}'>
+		<button class="btn btn-default" type="button">
+			<span class="glyphicon glyphicon-home" aria-hidden="true"></span>Catalog Home</button>
+	</a>
+	<a href = '{{ url_for('showCategory', category_name = item.category.name) }}'>
+		<button class="btn btn-default" type="button">
+			<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>Category Home</button>
+	</a>
+	<a href = '{{ url_for('getItemJSON', item_name = item.name) }}'>
+		<button class="btn btn-default" type="button">
+			<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>Item JSON</button>
+	</a>
+	{% if item.user_id == session["user_id"] %}
+		<a href = '{{url_for('editItem', item_name = item.name)}}'>
+			<button class="btn btn-default" type="button">
+				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit</button>
+		</a>
+		<a href = '{{url_for('deleteItem', item_name = item.name)}}'>
+			<button class="btn btn-default" type="button">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button>
+		</a>
+	{% endif %}
+</p>
+
+<div class="row">
+	<div class="col-sm-6">
+		<dd class="dl-horizontal">
+			<dt>Name:</dt>
+			<dd>{{ item.name }}</dd>
+			<dt>Description:</dt>
+			<dd>
+				{% if item.description %}
+					{{ item.description }}
+				{% else %}
+					&nbsp;
+				{% endif %}
+			</dd>
+			<dt>Category:</dt>
+			<dd>
+				<a href="{{ url_for('showCategory', category_name = item.category.name) }}">{{ item.category.name }}</a>
+			</dd>
+			<dt>Created by:</dt>
+			<dd>
+				{% if item.user.name %}
+					{{ item.user.name }}
+				{% else %}
+					&nbsp;
+				{% endif %}
+			</dd>
+			<dt>Created on:</dt>
+			<dd>{{ item.created.strftime("%Y-%m-%d %H:%M:%S") }}</dd>
+			<dt>Last modified:</dt>
+			<dd>{{ item.updated.strftime("%Y-%m-%d %H:%M:%S") }}</dd>
+		</dl>
+	</div>
+	<div class="col-sm-6 text-right">
+		<img width="300" src="{{item.image}}">
+	</div>
+</div>
+
+{% endblock %}

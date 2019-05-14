@@ -1,0 +1,23 @@
+<div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2 text-right"></div>
+</div>
+<div class="row divider blue">
+    <div class="col-md-12"></div>
+</div>
+<div class="row banner main">
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+        <h1>Catalog</h1>
+
+        <ul class="nav navbar-nav navbar-right">
+            {% if 'username' in session %}
+                <li><a href="{{ url_for('disconnect') }}">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-log-out"></span> Logout </button></a></li>
+                {% else %}
+                <li><a href="{{ url_for('showLogin') }}">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-log-in"></span> Login </button></a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

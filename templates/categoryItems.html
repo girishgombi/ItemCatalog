@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div>
+	<!--MESSAGE FLASHING -->
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<ul>
+				{% for message in messages %}
+					<li><strong>{{message}}</strong></li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	{% endwith %}
+
+	<div class="col-sm-4">
+		</br>
+		<a href="{{url_for('newCategory')}}"><h3>Add category</h3></a>
+		<p>
+			<h2 class="col"><span class="glyphicon glyphicon-list"></span>Categories</h2>
+		</p>
+		{% for category in categories %}
+			<a href="{{url_for('showCategory',category_name = category.name)}}"><h3>{{category.name}}</h3></a>
+		{% endfor %}
+	</div>
+
+	<div class="col-md-8 verticalLine">
+		</br>
+		<a href="{{url_for('newItem')}}"><h3>Add item</h3></a>
+		<p>
+			<h2 class="col"><span class="glyphicon glyphicon-list"></span>{{category_name}} ({{category_items|count}} Items)</h2>
+		</p>
+		{% for item in category_items %}
+			<div class="col-md-6 col-lg-4 movie-tile text-center" data-toggle="modal" data-target="#trailer">
+				<img src={{item.image}}  width="150" height="200">
+				<a href="{{url_for('showItem',category_name = item.category.name, item_name=item.name)}}"><h4>
+					{{item.name}}({{item.category.name}})</h4></a>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
